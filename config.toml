@@ -1,0 +1,8 @@
+base_url = "https://api.zentinelproxy.io"
+title = "Zentinel API"
+
+# CRITICAL: minify_html would corrupt JSON output
+minify_html = false
+compile_sass = false
+build_search_index = false
+generate_feeds = false

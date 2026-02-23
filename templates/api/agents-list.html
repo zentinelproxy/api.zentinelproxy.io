@@ -1,0 +1,6 @@
+{%- set agents_section = get_section(path="v1/agents/_index.md") -%}
+{"schema_version":1,"agents":[
+{%- for agent in agents_section.pages -%}
+{"name":"{{ agent.extra.name | safe }}","version":"{{ agent.extra.version | safe }}","status":"{{ agent.extra.status | safe }}","category":"{{ agent.extra.category | safe }}","description":"{{ agent.extra.description | safe }}"}{% if not loop.last %},{% endif %}
+{%- endfor -%}
+]}

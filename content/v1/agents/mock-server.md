@@ -1,0 +1,20 @@
++++
+title = "mock-server"
+template = "api/agent-detail.html"
+
+[extra]
+name = "mock-server"
+version = "0.4.0"
+repository = "zentinelproxy/zentinel-agent-mock-server"
+binary_name = "zentinel-mock-server-agent"
+description = "A mock server agent that intercepts requests and returns configurable stub responses with support for templating, latency simulation, and fault injection."
+author = "Zentinel Core Team"
+license = "Apache-2.0"
+status = "stable"
+category = "utility"
+tags = ["mock", "testing", "development", "stubs", "api"]
+protocol_version = "v2"
+min_zentinel_version = "26.01.0"
+bundle_included = true
+bundle_group = "Utility agents"
++++

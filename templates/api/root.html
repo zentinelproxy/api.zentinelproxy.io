@@ -1,0 +1,3 @@
+{%- set agents_section = get_section(path="v1/agents/_index.md") -%}
+{%- set agent_count = agents_section.pages | length -%}
+{"name":"Zentinel API","version":"v1","description":"Agent registry and bundle metadata for the Zentinel proxy.","endpoints":{"/v1/bundle/":"Bundle metadata with all included agents and download URLs","/v1/agents/":"List of all registered agents","/v1/agents/{name}/":"Detail for a specific agent","/v1/health/":"API health status"},"agent_count":{{ agent_count }},"documentation":"https://zentinelproxy.io/docs"}

@@ -1,0 +1,33 @@
+{%- set agents_section = get_section(path="v1/agents/_index.md") -%}
+{%- set platforms = ["linux-x86_64", "linux-aarch64", "darwin-x86_64", "darwin-aarch64"] -%}
+{"schema_version":1,"bundle":{"version":"{{ page.extra.bundle_version | safe }}","generated_at":"{{ page.date | date(format="%Y-%m-%dT%H:%M:%SZ") | safe }}"},"agents":{
+{%- set_global agent_entries = [] -%}
+{%- for agent in agents_section.pages -%}
+{%- if agent.extra.bundle_included -%}
+{%- set_global agent_entries = agent_entries | concat(with=agent) -%}
+{%- endif -%}
+{%- endfor -%}
+{%- for agent in agent_entries -%}
+"{{ agent.extra.name | safe }}":{
+"version":"{{ agent.extra.version | safe }}",
+"repository":"{{ agent.extra.repository | safe }}",
+"binary_name":"{{ agent.extra.binary_name | safe }}",
+"download_urls":{
+{%- for platform in platforms -%}
+{%- if platform is starting_with("linux") -%}
+{%- set os = "linux" -%}
+{%- else -%}
+{%- set os = "darwin" -%}
+{%- endif -%}
+{%- if platform is ending_with("x86_64") -%}
+{%- set arch = "x86_64" -%}
+{%- else -%}
+{%- set arch = "aarch64" -%}
+{%- endif -%}
+"{{ platform }}":"https://github.com/{{ agent.extra.repository | safe }}/releases/download/v{{ agent.extra.version | safe }}/{{ agent.extra.binary_name | safe }}-{{ agent.extra.version | safe }}-{{ os }}-{{ arch }}.tar.gz"{% if not loop.last %},{% endif %}
+{%- endfor -%}
+},
+"checksums":{}
+}{% if not loop.last %},{% endif %}
+{%- endfor -%}
+}}

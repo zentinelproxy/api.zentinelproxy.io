@@ -1,0 +1,4 @@
+{%- set bundle_page = get_page(path="v1/bundle.md") -%}
+{%- set agents_section = get_section(path="v1/agents/_index.md") -%}
+{%- set agent_count = agents_section.pages | length -%}
+{"status":"healthy","bundle_version":"{{ bundle_page.extra.bundle_version | safe }}","agent_count":{{ agent_count }},"api_version":"v1","generated_at":"{{ bundle_page.date | date(format="%Y-%m-%dT%H:%M:%SZ") | safe }}"}

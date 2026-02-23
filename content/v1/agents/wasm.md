@@ -1,0 +1,20 @@
++++
+title = "wasm"
+template = "api/agent-detail.html"
+
+[extra]
+name = "wasm"
+version = "0.3.0"
+repository = "zentinelproxy/zentinel-agent-wasm"
+binary_name = "zentinel-wasm-agent"
+description = "Execute custom Wasm modules for high-performance request/response processing in any language."
+author = "Zentinel Core Team"
+license = "Apache-2.0"
+status = "stable"
+category = "scripting"
+tags = ["scripting", "wasm", "extensibility", "performance"]
+protocol_version = "v2"
+min_zentinel_version = "26.01.0"
+bundle_included = true
+bundle_group = "Scripting agents"
++++

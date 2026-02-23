@@ -1,0 +1,33 @@
+{%- set platforms = ["linux-x86_64", "linux-aarch64", "darwin-x86_64", "darwin-aarch64"] -%}
+{"schema_version":1,"agent":{
+"name":"{{ page.extra.name | safe }}",
+"version":"{{ page.extra.version | safe }}",
+"repository":"{{ page.extra.repository | safe }}",
+"binary_name":"{{ page.extra.binary_name | safe }}",
+"description":"{{ page.extra.description | safe }}",
+"author":"{{ page.extra.author | safe }}",
+"license":"{{ page.extra.license | safe }}",
+"status":"{{ page.extra.status | safe }}",
+"category":"{{ page.extra.category | safe }}",
+"tags":{{ page.extra.tags | json_encode() | safe }},
+"protocol_version":"{{ page.extra.protocol_version | safe }}",
+"min_zentinel_version":"{{ page.extra.min_zentinel_version | safe }}",
+"bundle_included":{{ page.extra.bundle_included }},
+"bundle_group":"{{ page.extra.bundle_group | safe }}",
+"download_urls":{
+{%- for platform in platforms -%}
+{%- if platform is starting_with("linux") -%}
+{%- set os = "linux" -%}
+{%- else -%}
+{%- set os = "darwin" -%}
+{%- endif -%}
+{%- if platform is ending_with("x86_64") -%}
+{%- set arch = "x86_64" -%}
+{%- else -%}
+{%- set arch = "aarch64" -%}
+{%- endif -%}
+"{{ platform }}":"https://github.com/{{ page.extra.repository | safe }}/releases/download/v{{ page.extra.version | safe }}/{{ page.extra.binary_name | safe }}-{{ page.extra.version | safe }}-{{ os }}-{{ arch }}.tar.gz"{% if not loop.last %},{% endif %}
+{%- endfor -%}
+},
+"checksums":{}
+}}
