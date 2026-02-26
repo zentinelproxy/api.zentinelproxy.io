@@ -13,7 +13,6 @@ license = "MIT"
 status = "stable"
 category = "security"
 tags = ["ip-reputation", "threat-intelligence", "security", "blocklist", "tor"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
 bundle_included = true
 bundle_group = "Security agents"

@@ -13,7 +13,6 @@ license = "Apache-2.0"
 status = "stable"
 category = "scripting"
 tags = ["scripting", "javascript", "extensibility"]
-protocol_version = "v2"
 min_zentinel_version = "25.12.0"
 bundle_included = true
 bundle_group = "Scripting agents"

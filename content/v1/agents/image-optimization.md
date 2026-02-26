@@ -13,7 +13,6 @@ license = "MIT/Apache-2.0"
 status = "stable"
 category = "utility"
 tags = ["image", "optimization", "webp", "avif", "caching", "performance"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
 bundle_included = true
 bundle_group = "Utility agents"

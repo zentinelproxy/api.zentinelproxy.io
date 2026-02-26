@@ -13,7 +13,6 @@ license = "MIT"
 status = "stable"
 category = "utility"
 tags = ["chaos", "testing", "resilience", "fault-injection"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
 bundle_included = true
 bundle_group = "Utility agents"

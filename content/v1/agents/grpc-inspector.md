@@ -13,7 +13,6 @@ license = "MIT"
 status = "stable"
 category = "api-security"
 tags = ["grpc", "security", "authorization", "rate-limiting"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
 bundle_included = true
 bundle_group = "API security agents"

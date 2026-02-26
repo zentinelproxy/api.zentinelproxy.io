@@ -13,7 +13,6 @@ license = "Apache-2.0"
 status = "deprecated"
 category = "core"
 tags = ["security", "traffic", "deprecated"]
-protocol_version = "v2"
 min_zentinel_version = "25.12.0"
 bundle_included = true
 bundle_group = "Core agents"
