@@ -10,7 +10,7 @@
 "status":"{{ page.extra.status | safe }}",
 "category":"{{ page.extra.category | safe }}",
 "tags":{{ page.extra.tags | json_encode() | safe }},
-"protocol_version":"{{ page.extra.protocol_version | safe }}",
+"protocol_version":"{{ page.extra.protocol_version | default(value="v2") | safe }}",
 "min_zentinel_version":"{{ page.extra.min_zentinel_version | safe }}",
 "bundle_included":{{ page.extra.bundle_included }},
 "bundle_group":"{{ page.extra.bundle_group | safe }}",
