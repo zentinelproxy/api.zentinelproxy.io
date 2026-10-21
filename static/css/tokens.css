@@ -198,6 +198,13 @@
   --z-button-edge: #9b4804;
   --z-button-2-edge: #662c5a;
   --z-shadow-rgb: 8 4 8;
+  --z-bg-rgb: 22 13 21;
+  --z-surface-rgb: 31 22 30;
+  --z-surface-raised-rgb: 42 31 40;
+  --z-text-rgb: 243 237 242;
+  --z-accent-rgb: 246 141 49;
+  --z-accent-2-rgb: 155 77 138;
+  --z-gradient-brand-text: linear-gradient(135deg, #f68d31 0%, #e9a9d9 100%);
   color-scheme: dark;
 }
 
@@ -233,6 +240,13 @@
   --z-button-edge: #9b4804;
   --z-button-2-edge: #662c5a;
   --z-shadow-rgb: 54 18 46;
+  --z-bg-rgb: 250 246 250;
+  --z-surface-rgb: 255 255 255;
+  --z-surface-raised-rgb: 243 237 242;
+  --z-text-rgb: 31 22 30;
+  --z-accent-rgb: 246 141 49;
+  --z-accent-2-rgb: 155 77 138;
+  --z-gradient-brand-text: linear-gradient(135deg, #9b4804 0%, #9b4d8a 100%);
   color-scheme: light;
 }
 
@@ -269,6 +283,13 @@
     --z-button-edge: #9b4804;
     --z-button-2-edge: #662c5a;
     --z-shadow-rgb: 54 18 46;
+    --z-bg-rgb: 250 246 250;
+    --z-surface-rgb: 255 255 255;
+    --z-surface-raised-rgb: 243 237 242;
+    --z-text-rgb: 31 22 30;
+    --z-accent-rgb: 246 141 49;
+    --z-accent-2-rgb: 155 77 138;
+    --z-gradient-brand-text: linear-gradient(135deg, #9b4804 0%, #9b4d8a 100%);
     color-scheme: light;
   }
 }
