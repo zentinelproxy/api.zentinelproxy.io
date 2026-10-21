@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Not found · {{ config.title }}{% endblock %}
+{% block head %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="notfound">
+        <p class="eyebrow">404</p>
+        <h1>No endpoint here</h1>
+        <p class="lede">Nothing is published at this path. The index is <code>/</code>, the endpoints live under <code>/v1/</code>, and every path ends with a slash.</p>
+        <div class="notfound__actions">
+            <a class="z-btn" href="{{ get_url(path='reference/') | safe }}">API reference</a>
+            <a class="z-btn z-btn--ghost" href="{{ get_url(path='/') | safe }}">API index (JSON)</a>
+        </div>
+    </section>
+</div>
+{% endblock %}

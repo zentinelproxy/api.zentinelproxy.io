@@ -1,0 +1,27 @@
+{#- Macros for the reference page. Macros see only their arguments. -#}
+{%- macro copy_button(target, what) -%}
+<button class="z-copy" type="button" data-copy="{{ target }}" aria-label="Copy {{ what }}">
+    <svg class="z-copy__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    <span class="z-copy__label">Copy</span>
+</button>
+{%- endmacro copy_button -%}
+
+{%- macro request(id, path, base) -%}
+<div class="example">
+    <div class="example__bar">
+        <span class="example__title">Request</span>
+        {{ self::copy_button(target=id ~ "-req", what="request for " ~ path) }}
+    </div>
+    <pre class="code code--request"><code id="{{ id }}-req">curl -s {{ base }}{{ path }}</code></pre>
+</div>
+{%- endmacro request -%}
+
+{%- macro response_bar(id, path, raw) -%}
+<div class="example__bar">
+    <span class="example__title">Response <span class="example__type">application/json</span></span>
+    <span class="example__actions">
+        <a class="example__raw" href="{{ raw }}">Raw JSON<span class="sr-only"> for {{ path }}</span></a>
+        {{ self::copy_button(target=id ~ "-res", what="response for " ~ path) }}
+    </span>
+</div>
+{%- endmacro response_bar -%}

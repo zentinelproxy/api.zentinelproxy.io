@@ -1,0 +1,134 @@
+{#- Layout for the human-readable pages (reference, 404). The API endpoints
+    themselves are JSON templates under api/ and never extend this. -#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>{% block title %}{{ config.title }}{% endblock %}</title>
+    <meta name="description" content="{% block description %}Agent registry and bundle metadata for the Zentinel proxy.{% endblock %}">
+    {% block head %}{% endblock %}
+
+    <!-- Theme: applied before first paint. A stored "light" or "dark" sets
+         data-theme on <html>; no stored value (System) leaves it unset so the
+         tokens follow prefers-color-scheme. The switch is in the footer. -->
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('theme');
+                if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+            } catch (e) {}
+        })();
+    </script>
+
+    <!-- Self-hosted fonts (Unbounded, Atkinson Hyperlegible Next/Mono; SIL OFL 1.1) -->
+    <link rel="preload" href="{{ get_url(path='fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2') | safe }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ get_url(path='fonts/atkinson-hyperlegible-mono-latin-wght-normal.woff2') | safe }}" as="font" type="font/woff2" crossorigin>
+
+    <!-- Zentinel design system (vendored from zentinelproxy/design), then this site's own styles -->
+    <link rel="stylesheet" href="{{ get_url(path='css/tokens.css') | safe }}">
+    <link rel="stylesheet" href="{{ get_url(path='css/fonts.css') | safe }}">
+    <link rel="stylesheet" href="{{ get_url(path='css/frame.css') | safe }}">
+    <link rel="stylesheet" href="{{ get_url(path='css/api.css') | safe }}">
+
+    <link rel="icon" href="{{ get_url(path='favicon.ico') | safe }}" sizes="48x48">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ get_url(path='favicon.png') | safe }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ get_url(path='apple-touch-icon.png') | safe }}">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <p id="z-announce" class="sr-only" aria-live="polite"></p>
+
+    <header class="header">
+        <div class="container header__inner">
+            <a href="{{ get_url(path='reference/') | safe }}" class="brand" aria-label="Zentinel API reference">
+                <picture>
+                    <source type="image/avif" srcset="{{ get_url(path='img/zentinel-mark-disc-64.avif') | safe }} 1x, {{ get_url(path='img/zentinel-mark-disc-128.avif') | safe }} 2x">
+                    <img src="{{ get_url(path='img/zentinel-mark-disc-128.png') | safe }}" alt="" class="brand__mark" width="32" height="32">
+                </picture>
+                {% include "partials/wordmark.html" %}
+                <span class="brand__product">API</span>
+            </a>
+            <nav class="nav" aria-label="Zentinel sites">
+                <ul class="nav__links">
+                    <li><a href="https://zentinelproxy.io/">Website</a></li>
+                    <li><a href="https://docs.zentinelproxy.io/">Docs</a></li>
+                    <li><a href="https://registry.zentinelproxy.io/">Registry</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" class="main" tabindex="-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__inner">
+            <div class="footer__brand">
+                <a href="https://zentinelproxy.io/" class="brand brand--footer" aria-label="Zentinel website">
+                    <picture>
+                        <source type="image/avif" srcset="{{ get_url(path='img/zentinel-mark-disc-64.avif') | safe }} 1x, {{ get_url(path='img/zentinel-mark-disc-128.avif') | safe }} 2x">
+                        <img src="{{ get_url(path='img/zentinel-mark-disc-128.png') | safe }}" alt="" class="brand__mark" width="28" height="28" loading="lazy">
+                    </picture>
+                    <svg class="brand__wordmark" viewBox="0 0 499.3 84.1" aria-hidden="true" focusable="false"><use href="#zentinel-wordmark"/></svg>
+                </a>
+                <p class="footer__tagline">The static JSON API behind <code>zentinel bundle</code>.</p>
+            </div>
+            <nav class="footer__links" aria-label="Footer">
+                <ul>
+                    <li><a href="https://zentinelproxy.io/">Website</a></li>
+                    <li><a href="https://docs.zentinelproxy.io/">Docs</a></li>
+                    <li><a href="https://registry.zentinelproxy.io/">Registry</a></li>
+                    <li><a href="https://github.com/zentinelproxy/api.zentinelproxy.io">Source</a></li>
+                </ul>
+            </nav>
+            <div class="footer__theme">
+                <span class="footer__theme-label" aria-hidden="true">Theme</span>
+                <fieldset class="theme-switch z-segmented">
+                    <legend class="sr-only">Colour theme</legend>
+                    <label title="Follow the system setting">
+                        <input type="radio" name="theme" value="system" checked>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                        <span>System</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="theme" value="light">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                        <span>Light</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="theme" value="dark">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                        <span>Dark</span>
+                    </label>
+                </fieldset>
+            </div>
+            <p class="footer__legal">Part of <a href="https://zentinelproxy.io/">Zentinel</a>, the security-first reverse proxy. Apache 2.0.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Footer theme switch: System removes data-theme (prefers-color-scheme
+        // applies), Light/Dark set it. The choice is remembered when storage works.
+        (function () {
+            var root = document.documentElement;
+            var current = root.getAttribute('data-theme') || 'system';
+            document.querySelectorAll('.theme-switch input[name="theme"]').forEach(function (input) {
+                input.checked = input.value === current;
+                input.addEventListener('change', function () {
+                    if (!input.checked) return;
+                    if (input.value === 'system') root.removeAttribute('data-theme');
+                    else root.setAttribute('data-theme', input.value);
+                    try {
+                        if (input.value === 'system') localStorage.removeItem('theme');
+                        else localStorage.setItem('theme', input.value);
+                    } catch (e) {}
+                });
+            });
+        })();
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
