@@ -136,8 +136,7 @@ deployment. GitHub Actions only check: design drift and bundle drift.
 
 ## License
 
-This repository has no `LICENSE` file yet. The typefaces in `static/fonts/` are
-under the SIL Open Font License 1.1 (the `*-OFL.txt` files next to them).
+MIT, see [`LICENSE`](LICENSE).
 
 ---
 
