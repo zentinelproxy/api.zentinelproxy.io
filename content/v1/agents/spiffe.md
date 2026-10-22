@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "spiffe"
-version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-spiffe"
 binary_name = "zentinel-spiffe-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "identity"
 tags = ["security", "auth", "zero-trust", "spiffe", "mtls", "identity"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Identity agents"
 +++

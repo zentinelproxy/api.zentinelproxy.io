@@ -15,6 +15,5 @@ status = "stable"
 category = "security"
 tags = ["security", "privacy", "pii", "masking", "tokenization", "gdpr"]
 min_zentinel_version = "26.01.0"
-bundle_included = false
 bundle_group = "Security agents"
 +++

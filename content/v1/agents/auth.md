@@ -15,6 +15,5 @@ status = "stable"
 category = "identity"
 tags = ["auth", "jwt", "oauth", "rbac", "api-key", "identity"]
 min_zentinel_version = "26.01.0"
-bundle_included = false
 bundle_group = "Identity agents"
 +++

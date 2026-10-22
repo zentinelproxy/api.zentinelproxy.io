@@ -1,7 +1,15 @@
-{%- set platforms = ["linux-x86_64", "linux-aarch64", "darwin-x86_64", "darwin-aarch64"] -%}
+{#- Version, bundle membership and download URLs of a bundled agent come from
+    data/bundle-versions.lock (see api/bundle.html); the page supplies the rest.
+    An agent that is not in the bundle lists no download URLs, because its
+    release assets are not known to exist. -#}
+{%- set lock = load_data(path="data/bundle-versions.lock", format="toml") -%}
+{%- set name = page.extra.name -%}
+{%- set bundled = name in lock.agents -%}
+{%- if bundled -%}{%- set version = lock.agents[name] -%}{%- else -%}{%- set version = page.extra.version -%}{%- endif -%}
+{%- if lock.platforms and name in lock.platforms -%}{%- set platforms = lock.platforms[name] -%}{%- else -%}{%- set platforms = lock.bundle.platforms -%}{%- endif -%}
 {"schema_version":1,"agent":{
-"name":"{{ page.extra.name | safe }}",
-"version":"{{ page.extra.version | safe }}",
+"name":"{{ name | safe }}",
+"version":"{{ version | safe }}",
 "repository":"{{ page.extra.repository | safe }}",
 "binary_name":"{{ page.extra.binary_name | safe }}",
 "description":"{{ page.extra.description | safe }}",
@@ -12,22 +20,14 @@
 "tags":{{ page.extra.tags | json_encode() | safe }},
 "protocol_version":"{{ page.extra.protocol_version | default(value="v2") | safe }}",
 "min_zentinel_version":"{{ page.extra.min_zentinel_version | safe }}",
-"bundle_included":{{ page.extra.bundle_included }},
+"bundle_included":{{ bundled }},
 "bundle_group":"{{ page.extra.bundle_group | safe }}",
 "download_urls":{
+{%- if bundled -%}
 {%- for platform in platforms -%}
-{%- if platform is starting_with("linux") -%}
-{%- set os = "linux" -%}
-{%- else -%}
-{%- set os = "darwin" -%}
-{%- endif -%}
-{%- if platform is ending_with("x86_64") -%}
-{%- set arch = "x86_64" -%}
-{%- else -%}
-{%- set arch = "aarch64" -%}
-{%- endif -%}
-"{{ platform }}":"https://github.com/{{ page.extra.repository | safe }}/releases/download/v{{ page.extra.version | safe }}/{{ page.extra.binary_name | safe }}-{{ page.extra.version | safe }}-{{ os }}-{{ arch }}.tar.gz"{% if not loop.last %},{% endif %}
+"{{ platform }}":"https://github.com/{{ page.extra.repository | safe }}/releases/download/v{{ version | safe }}/{{ page.extra.binary_name | safe }}-{{ version | safe }}-{{ platform }}.tar.gz"{% if not loop.last %},{% endif %}
 {%- endfor -%}
+{%- endif -%}
 },
 "checksums":{}
 }}

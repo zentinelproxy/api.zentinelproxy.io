@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "mqtt-gateway"
-version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-mqtt-gateway"
 binary_name = "zentinel-mqtt-gateway-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "protocol"
 tags = ["mqtt", "iot", "security", "authentication", "acl", "rate-limiting"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Protocol agents"
 +++

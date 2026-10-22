@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "zentinelsec"
-version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-zentinelsec"
 binary_name = "zentinel-zentinelsec-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "security"
 tags = ["security", "waf", "modsecurity", "owasp", "crs", "pure-rust"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Security agents"
 +++

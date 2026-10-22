@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "transform"
-version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-transform"
 binary_name = "zentinel-transform-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "utility"
 tags = ["transformation", "rewriting", "core"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Utility agents"
 +++
