@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "ratelimit"
-version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-ratelimit"
 binary_name = "zentinel-ratelimit-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "deprecated"
 category = "core"
 tags = ["security", "traffic", "deprecated"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Core agents"
 +++

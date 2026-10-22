@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "image-optimization"
-version = "0.2.0"
 repository = "zentinelproxy/zentinel-agent-image-optimization"
 binary_name = "zentinel-image-optimization-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "utility"
 tags = ["image", "optimization", "webp", "avif", "caching", "performance"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Utility agents"
 +++

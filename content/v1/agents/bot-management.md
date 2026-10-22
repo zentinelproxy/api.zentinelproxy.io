@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "bot-management"
-version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-bot-management"
 binary_name = "zentinel-bot-management-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "security"
 tags = ["security", "bot-detection", "core"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Security agents"
 +++

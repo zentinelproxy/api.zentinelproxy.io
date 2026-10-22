@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "js"
-version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-js"
 binary_name = "zentinel-js-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "scripting"
 tags = ["scripting", "javascript", "extensibility"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Scripting agents"
 +++

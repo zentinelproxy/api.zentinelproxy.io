@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "audit-logger"
-version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-audit-logger"
 binary_name = "zentinel-audit-logger-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "utility"
 tags = ["logging", "compliance", "security", "audit"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Utility agents"
 +++

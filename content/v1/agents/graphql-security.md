@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "graphql-security"
-version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-graphql-security"
 binary_name = "zentinel-graphql-security-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "api-security"
 tags = ["security", "graphql", "api"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "API security agents"
 +++

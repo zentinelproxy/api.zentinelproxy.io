@@ -15,6 +15,5 @@ status = "stable"
 category = "api-security"
 tags = ["ai", "llm", "gateway", "openai", "anthropic", "rate-limiting"]
 min_zentinel_version = "26.01.0"
-bundle_included = false
 bundle_group = "API security agents"
 +++

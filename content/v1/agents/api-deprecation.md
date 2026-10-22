@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "api-deprecation"
-version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-api-deprecation"
 binary_name = "zentinel-api-deprecation-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "api-security"
 tags = ["api", "deprecation", "lifecycle", "sunset", "migration"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "API security agents"
 +++

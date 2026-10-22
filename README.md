@@ -27,7 +27,7 @@ Pages serves with a JSON content type. The `zentinel` binary reads
 | Path | Returns | Source |
 |---|---|---|
 | `/` | API index: name, version, the endpoint list and the agent count | `content/_index.md`, `templates/api/root.html` |
-| `/v1/bundle/` | the bundle version and, for every agent with `bundle_included = true`, its version, repository, binary name and download URLs for `linux-x86_64`, `linux-aarch64`, `darwin-x86_64`, `darwin-aarch64` | `content/v1/bundle.md`, `templates/api/bundle.html` |
+| `/v1/bundle/` | the bundle version and, for every agent in the bundle lock, its version, repository, binary name and a download URL per platform it is released for | `data/bundle-versions.lock`, `templates/api/bundle.html` |
 | `/v1/agents/` | every registered agent: name, version, status, category, description | `content/v1/agents/_index.md`, `templates/api/agents-list.html` |
 | `/v1/agents/{name}/` | one agent's full record (repository, binary, license, tags, protocol version, minimum Zentinel version, bundle group, download URLs) | `content/v1/agents/<name>.md`, `templates/api/agent-detail.html` |
 | `/v1/health/` | `status`, the bundle version and agent count, and when the bundle was generated | `templates/api/health.html` |
@@ -40,7 +40,8 @@ curl -s https://api.zentinelproxy.io/v1/agents/waf/
 
 Download URLs follow
 `https://github.com/<repository>/releases/download/v<version>/<binary_name>-<version>-<os>-<arch>.tar.gz`;
-`checksums` is currently always empty. To point the proxy at a self-hosted
+`checksums` is currently always empty (the proxy fetches `<url>.sha256`
+instead). To point the proxy at a self-hosted
 copy, set `ZENTINEL_API_URL` to its bundle URL; when the API cannot be reached,
 the proxy falls back to `bundle-versions.lock` on zentinel's `main` branch.
 
@@ -50,7 +51,23 @@ filterable table of all agents. The example responses are rendered by the same
 endpoint templates from the same pages, so they cannot drift from what the API
 serves. It lives outside `/v1/` so it is served as HTML.
 
-## Adding or updating an agent
+## The bundle: one source of truth
+
+What is in the bundle (which agents, their versions, the platforms each is
+released for) is **not** edited here. `data/bundle-versions.lock` is a
+byte-identical copy of [zentinel's `bundle-versions.lock`](https://github.com/zentinelproxy/zentinel/blob/main/bundle-versions.lock),
+the file the `zentinel` binary embeds for `bundle install`. The templates read
+it with `load_data`, so `/v1/bundle/`, `/v1/health/`, and the `version` and
+`bundle_included` fields of `/v1/agents/` and `/v1/agents/{name}/` all come
+from it.
+
+To change the bundle: release the agent, update the lock in zentinel (its CI
+checks that every asset exists), then copy the file here and bump `date` in
+`content/v1/bundle.md` (the bundle's `generated_at`). The **Bundle drift**
+workflow fails while the copy differs from zentinel's `main`, or when any
+asset it lists does not download.
+
+## Adding or updating an agent's metadata
 
 Create or edit `content/v1/agents/<name>.md`; front matter only:
 
@@ -61,7 +78,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "waf"
-version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-waf"
 binary_name = "zentinel-waf-agent"
 protocol_version = "v2"
@@ -72,17 +88,13 @@ status = "stable"
 category = "security"
 tags = ["security", "waf", "core", "api-security"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Core agents"
 +++
 ```
 
-`bundle_included = true` adds the agent to `/v1/bundle/`, which `zentinel
-bundle update` installs from, so set it only for agents whose release assets
-exist under the URL pattern above. Keep the record in step with the agent's
-page in [registry.zentinelproxy.io](https://github.com/zentinelproxy/registry.zentinelproxy.io)
-and with zentinel's `bundle-versions.lock` files (the repository root and `crates/proxy/`, which the binary embeds). A new bundle
-release also bumps `bundle_version` and `date` in `content/v1/bundle.md`.
+An agent that is not in the bundle lock also sets `version`; it is listed in
+`/v1/agents/` but has no download URLs. Keep the record in step with the
+agent's page in [registry.zentinelproxy.io](https://github.com/zentinelproxy/registry.zentinelproxy.io).
 
 ## Development
 
@@ -94,7 +106,8 @@ zola build          # into public/
 There is no `mise.toml` here; use the same zola as the other sites (0.19, see
 [zentinelproxy.io#51](https://github.com/zentinelproxy/zentinelproxy.io/issues/51)).
 The site uses no syntax highlighting, so the 0.19/0.22 difference does not
-affect it. Keep `minify_html = false` in `config.toml`: minification corrupts
+affect it. zola 0.23 does not build it (its template engine rejects
+`{% import %}`). Keep `minify_html = false` in `config.toml`: minification corrupts
 the JSON output.
 
 `static/_headers` sets `Content-Type: application/json`, CORS
@@ -112,7 +125,7 @@ is by hand. The site's own styles are in `static/css/api.css`.
 
 Cloudflare Pages builds and serves the site from this repository: every merge
 to `main` deploys to api.zentinelproxy.io, and pull requests get a preview
-deployment. There are no GitHub Actions workflows.
+deployment. GitHub Actions only check: design drift and bundle drift.
 
 ## Related
 

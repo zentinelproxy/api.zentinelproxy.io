@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "mock-server"
-version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-mock-server"
 binary_name = "zentinel-mock-server-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "utility"
 tags = ["mock", "testing", "development", "stubs", "api"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Utility agents"
 +++

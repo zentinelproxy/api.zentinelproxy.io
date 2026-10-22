@@ -14,6 +14,7 @@
 {% block content %}
 {%- set agents_section = get_section(path="v1/agents/_index.md") -%}
 {%- set bundle_page = get_page(path="v1/bundle.md") -%}
+{%- set lock = load_data(path="data/bundle-versions.lock", format="toml") -%}
 {%- set base = config.base_url | trim_end_matches(pat="/") -%}
 <div class="container ref">
     <aside class="ref__toc" aria-labelledby="toc-title">
@@ -63,7 +64,7 @@
 
         <section class="endpoint" id="ep-bundle" aria-labelledby="ep-bundle-h">
             <h2 class="endpoint__sig" id="ep-bundle-h"><span class="method">GET</span><code>/v1/bundle/</code></h2>
-            <p class="endpoint__desc">Bundle metadata with all included agents and download URLs. This is what <code>zentinel bundle</code> fetches. Current bundle: <code>{{ bundle_page.extra.bundle_version }}</code>.</p>
+            <p class="endpoint__desc">Bundle metadata with all included agents and download URLs. This is what <code>zentinel bundle</code> fetches. Current bundle: <code>{{ lock.bundle.version }}</code>.</p>
             {{ m::request(id="ep-bundle", path="/v1/bundle/", base=base) }}
             <div class="example">
                 {{ m::response_bar(id="ep-bundle", path="/v1/bundle/", raw=get_url(path="v1/bundle/")) }}
@@ -124,10 +125,10 @@
                     {%- for agent in agents_section.pages %}
                     <tr data-agent>
                         <th scope="row"><a href="{{ get_url(path='v1/agents/' ~ agent.extra.name ~ '/') | safe }}"><code>{{ agent.extra.name }}</code></a></th>
-                        <td data-label="Version"><code>{{ agent.extra.version }}</code></td>
+                        <td data-label="Version"><code>{% if agent.extra.name in lock.agents %}{{ lock.agents[agent.extra.name] }}{% else %}{{ agent.extra.version }}{% endif %}</code></td>
                         <td data-label="Status"><span class="status status--{{ agent.extra.status | slugify }}">{{ agent.extra.status }}</span></td>
                         <td data-label="Category">{{ agent.extra.category }}</td>
-                        <td data-label="Bundled">{% if agent.extra.bundle_included %}Yes{% else %}No{% endif %}</td>
+                        <td data-label="Bundled">{% if agent.extra.name in lock.agents %}Yes{% else %}No{% endif %}</td>
                         <td data-label="Description" class="agents__desc">{{ agent.extra.description }}</td>
                     </tr>
                     {%- endfor %}

@@ -1,0 +1,56 @@
+# Bundle drift: is /v1/bundle/ still the bundle the zentinel binary embeds,
+# and does every asset it lists exist?
+#
+# /v1/bundle/ (and the version/bundled fields of the other endpoints) is
+# rendered from data/bundle-versions.lock, a vendored copy of zentinel's
+# bundle-versions.lock. Before this, the API and the binary were edited
+# separately, disagreed (26.02_13 here, 26.03_01 in the binary) and both
+# listed releases that did not exist (zentinel#598).
+#
+# Fails when the copy differs from zentinel's main, or when an asset URL it
+# points at does not download (zentinel's scripts/check-bundle-lock.py, the
+# same check zentinel's CI runs). Fix a failure by copying zentinel's file
+# here, never by editing the copy: change the lock in zentinel first.
+name: Bundle drift
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    name: data/bundle-versions.lock matches zentinel and its assets exist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: api
+
+      - uses: actions/checkout@v4
+        with:
+          repository: zentinelproxy/zentinel
+          ref: main
+          path: zentinel
+          sparse-checkout: |
+            bundle-versions.lock
+            scripts/check-bundle-lock.py
+          sparse-checkout-cone-mode: false
+
+      - name: Compare with zentinel's bundle-versions.lock
+        run: |
+          if ! cmp -s zentinel/bundle-versions.lock api/data/bundle-versions.lock; then
+            echo "::error file=data/bundle-versions.lock::differs from zentinelproxy/zentinel main:bundle-versions.lock; copy it here"
+            diff -u zentinel/bundle-versions.lock api/data/bundle-versions.lock || true
+            exit 1
+          fi
+
+      - name: Check every asset exists
+        run: python3 zentinel/scripts/check-bundle-lock.py api/data/bundle-versions.lock

@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "websocket-inspector"
-version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-websocket-inspector"
 binary_name = "zentinel-websocket-inspector-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "protocol"
 tags = ["websocket", "security", "real-time", "inspection"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Protocol agents"
 +++

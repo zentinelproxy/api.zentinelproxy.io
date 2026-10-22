@@ -4,7 +4,6 @@ template = "api/agent-detail.html"
 
 [extra]
 name = "denylist"
-version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-denylist"
 binary_name = "zentinel-denylist-agent"
 protocol_version = "v2"
@@ -15,6 +14,5 @@ status = "stable"
 category = "core"
 tags = ["security", "filtering", "core"]
 min_zentinel_version = "26.01.0"
-bundle_included = true
 bundle_group = "Core agents"
 +++
